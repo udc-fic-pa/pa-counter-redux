@@ -1,28 +1,25 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import * as actions from './actions';
+import * as selectors from './selectors';
 
-const App = ({value, onIncrement, onDecrement, onReset}) => (
-    <div>
-        {value + ' '}
-        <button onClick={onIncrement}>+</button>
-        {' '}
-        <button onClick={onDecrement}>-</button>
-        {' '}
-        <button onClick={onReset}>Reset</button>
-    </div>
-);
+const App = () => {
 
+    const value = useSelector(selectors.getValue);
+    const dispatch = useDispatch();
 
-const mapStateToProps = state => ({
-    value: state.value
-});
-  
-const mapDispatchToProps = dispatch => ({
-    onIncrement: () => dispatch(actions.increment()),
-    onDecrement: () => dispatch(actions.decrement()),
-    onReset: () => dispatch(actions.reset())
-});
+    return (
+        <div>
+            {value + ' '}
+            <button onClick={() => dispatch(actions.increment())}>+</button>
+            {' '}
+            <button onClick={() => dispatch(actions.decrement())}>-</button>
+            {' '}
+            <button onClick={() => dispatch(actions.reset())}>Reset</button>
+        </div>
+    );
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+}
+
+export default App;
